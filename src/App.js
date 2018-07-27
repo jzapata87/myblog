@@ -8,9 +8,8 @@ import FormType from './FormType.js'
 
 class App extends Component {
 
-
-
   state = {
+    sections: [],
     data: [
       {'header': "this is a header"},
       {'p': "paragraph"}
@@ -29,6 +28,12 @@ class App extends Component {
       <p>{data}</p>
     )
   }
+
+  //Function that returns a <FornType> component
+  handleClick = () => {
+    this.setState({sections: [...this.state.sections, <FormType addDataToState={this.addDataToState}/>]})
+  }
+
 
   tagFunctionSelector = (key, value) => {
     switch (key) {
@@ -65,7 +70,6 @@ class App extends Component {
       blogItems.push(this.tagFunctionSelector(key, value))
     })
 
-    console.log(this.state.data)
 
     return (
       <div className="App">
@@ -76,8 +80,9 @@ class App extends Component {
         <p className="App-intro">
           To get startd, edit <code>src/App.js</code> and save to reload.
         </p>
+        <button onClick={this.handleClick}>Add More</button>
         <FormType addDataToState={this.addDataToState}/>
-
+        {this.state.sections}
         {
           blogItems
         }

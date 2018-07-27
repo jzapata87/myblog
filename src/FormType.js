@@ -25,7 +25,7 @@ class FormType extends React.Component {
   handleSubmit = (event) => {
 
     this.props.addDataToState(this.state.htmltype, this.state.data)
-    alert(" htmltype: " + this.state.htmltype + " data: " +this.state.data)
+    //alert(" htmltype: " + this.state.htmltype + " data: " +this.state.data)
     event.preventDefault();
   }
 
@@ -40,7 +40,7 @@ class FormType extends React.Component {
               <option value="header">Header</option>
               <option value="other">other</option>
             </select>
-            <input type="text" value={this.state.data} onChange={this.handleDataChange} />
+            <input type="text" value={this.state.data} onChange={this.handleDataChange} style={{width: "400px", height: "200px"}} />
           </label>
           <input type="submit" value="Submit" />
         </form>
