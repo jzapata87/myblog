@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import FormType from './FormType.js'
 
 
 
@@ -9,14 +10,20 @@ class App extends Component {
 
 
 
+  state = {
+    data: [
+      {'header': "this is a header"},
+      {'p': "paragraph"}
+    ]
+  }
+
   headerFunction = data => {
       return (
-        <header>{data}</header>
+        <h1>{data}</h1>
       )
   }
 
   paragraphFunction = data => {
-    console.log(data, 'inside paragraph function')
     return (
 
       <p>{data}</p>
@@ -26,10 +33,10 @@ class App extends Component {
   tagFunctionSelector = (key, value) => {
     switch (key) {
       case 'header':
-        console.log(this.headerFunction(value))
         return this.headerFunction(value)
       case 'p':
-        console.log(value, 'inside function tagselection')
+        return this.paragraphFunction(value)
+      case 'other':
         return this.paragraphFunction(value)
 
       default:
@@ -37,13 +44,28 @@ class App extends Component {
     }
   }
 
+  addDataToState = (key, value) => {
+    console.log(key, value, " inside add datatostate")
+    this.setState({data: [...this.state.data, {[key]: value}]})
+
+  }
+
 
   render() {
+    const blogItems = [];
 
-    const myObj = {
-      'header': "this is a header",
-      'p': "paragraph"
-    }
+
+
+
+    this.state.data.forEach(obj => {
+      let array = [];
+      Object.entries(obj)[0].forEach(item => array.push(item))
+      let [key, value] = array;
+      console.log('key: ' , key, " value: ", value)
+      blogItems.push(this.tagFunctionSelector(key, value))
+    })
+
+    console.log(this.state.data)
 
     return (
       <div className="App">
@@ -54,12 +76,10 @@ class App extends Component {
         <p className="App-intro">
           To get startd, edit <code>src/App.js</code> and save to reload.
         </p>
+        <FormType addDataToState={this.addDataToState}/>
 
         {
-          Object.keys(myObj).map(key => {
-            console.log(key, myObj[key], "inside object.key");
-            return (this.tagFunctionSelector(key, myObj[key]))
-          })
+          blogItems
         }
       </div>
     );
